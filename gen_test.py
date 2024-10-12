@@ -16,7 +16,7 @@ import os
 @click.option(
     "-r",
     "--rand",
-    is_flag=False,
+    is_flag=True,
     help="Generate random tests",
     default=True,
     show_default=True,
@@ -38,7 +38,7 @@ import os
 @click.option(
     "-s",
     "--specification",
-    is_flag=False,
+    is_flag=True,
     help="Generate tests based on specification",
     default=True,
     show_default=True,
