@@ -62,17 +62,23 @@ def main(rand, num_tests, num_lines, specification, cleanup):
         for f in glob.glob(f"{path}fails/test_fail_*.br"):
             os.remove(f)
         return
-
+    total = 0
     if rand:
         for i in range(num_tests):
             test = generate_random_brewin(num_lines)
             write_p_test(test, f"{path}tests/test_random_{i}.br")
+            total += 1
 
     if specification:
         for i, test in enumerate(PASSING_TESTS):
             write_p_test(test, f"{path}tests/test_pass_{i}.br")
+            total += 1
         for i, test in enumerate(FAILING_TESTS):
             write_f_test(test, f"{path}fails/test_fail_{i}.br")
+            total += 1
+
+    print(f"Success! {total} test cases added.")
+    return 0
 
 
 ####################################################################################################
@@ -170,11 +176,11 @@ def generate_random_brewin(n):
             if choice == 1:
                 value = random.randint(0, 100)  # Assign a constant
             elif choice == 2:
-                value = random.choice(list(defined_vars))  # Assign another variable
+                value = random.choice(list(assigned_vars))  # Assign another variable
                 if value == var_name:
                     continue
             else:
-                value = generate_random_expression(defined_vars)  # Assign an expression
+                value = generate_random_expression(assigned_vars)  # Assign an expression
             program += f"    {var_name} = {value};\n"
             assigned_vars.add(var_name)
             i += 1
